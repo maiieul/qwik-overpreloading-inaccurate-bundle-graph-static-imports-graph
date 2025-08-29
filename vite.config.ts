@@ -21,7 +21,20 @@ errorOnDuplicatesPkgDeps(devDependencies, dependencies);
  */
 export default defineConfig(({ command, mode }): UserConfig => {
   return {
-    plugins: [qwikCity(), qwikVite(), tsconfigPaths({ root: "." })],
+    build: {
+      minify: false,
+      rollupOptions: {
+        output: {
+          hoistTransitiveImports: false, // <— stops Rollup from injecting those bare imports
+          experimentalMinChunkSize: 0,
+        },
+      },
+    },
+    plugins: [
+      qwikCity(),
+      qwikVite({ debug: true }),
+      tsconfigPaths({ root: "." }),
+    ],
     // This tells Vite which dependencies to pre-build in dev mode.
     optimizeDeps: {
       // Put problematic deps that break bundling here, mostly those with binaries.
@@ -70,18 +83,18 @@ export default defineConfig(({ command, mode }): UserConfig => {
  */
 function errorOnDuplicatesPkgDeps(
   devDependencies: PkgDep,
-  dependencies: PkgDep,
+  dependencies: PkgDep
 ) {
   let msg = "";
   // Create an array 'duplicateDeps' by filtering devDependencies.
   // If a dependency also exists in dependencies, it is considered a duplicate.
   const duplicateDeps = Object.keys(devDependencies).filter(
-    (dep) => dependencies[dep],
+    (dep) => dependencies[dep]
   );
 
   // include any known qwik packages
   const qwikPkg = Object.keys(dependencies).filter((value) =>
-    /qwik/i.test(value),
+    /qwik/i.test(value)
   );
 
   // any errors for missing "qwik-city-plan"

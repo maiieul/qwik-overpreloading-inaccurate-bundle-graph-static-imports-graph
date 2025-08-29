@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - esbuild
+  - nx
+  - sharp
+
+overrides:
+  "@builder.io/qwik": link:../../work/qwik/packages/qwik
+  "@builder.io/qwik-city": link:../../work/qwik/packages/qwik-city

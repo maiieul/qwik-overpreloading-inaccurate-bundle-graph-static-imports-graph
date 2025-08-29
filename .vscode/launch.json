@@ -19,6 +19,27 @@
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/node_modules/vite/bin/vite.js",
       "args": ["--mode", "ssr", "--force"]
-    }
+    },
+    {
+      "type": "node",
+      "name": "preview.debug",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/node_modules/vite/bin/vite.js",
+      "args": ["preview", "--mode", "ssr", "--force"]
+    },
+    {
+      "type": "node",
+      "name": "build.client",
+      "request": "launch",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "run",
+        "build.client"
+      ],
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}"
+    },
   ]
 }
